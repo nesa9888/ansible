@@ -1,0 +1,8 @@
+- name: Installing Kafka on Ubuntu
+  hosts: all
+  vars:
+    - installation_dir : /opt/kafka
+    - username: kafka
+  roles:
+    - all_servers
+
