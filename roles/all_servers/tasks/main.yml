@@ -1,6 +1,6 @@
 ---
 - name: Install JRE after apt update
-  become: yes
+  become: true
   apt:
     name:
       - default-jre
@@ -8,24 +8,24 @@
     update_cache: yes
 
 - name: Create a group
-  become: yes
+  become: true
   group:
     name: "{{username}}"
     state: present
 
 - name: Create an user
-  become: yes
+  become: true
   user:
     name: "{{username}}"
     state: present
     group: kafka
 
 - name: Remove content from install directory
-  become: yes
+  become: true
   shell: "rm -r {{installation_dir}}/*"
 
 - name: Create a Installation Directory
-  become: yes
+  become: true
   file:
     path: "{{installation_dir}}"
     state: directory
@@ -34,7 +34,7 @@
     group: kafka
 
 - name: Download Kafka and Unzip
-  become: yes
+  become: true
   unarchive:
     src: https://downloads.apache.org/kafka/3.3.1/kafka_2.13-3.3.1.tgz
     dest: "{{installation_dir}}"
@@ -42,12 +42,12 @@
     remote_src: yes
 
 - name: Move all the files to parent Directory
-  become: yes
+  become: true
   shell:
     mv {{installation_dir}}/kafka_*/* {{installation_dir}}/.
 
 - name: Update the log path
-  become: yes
+  become: true
   replace:
     path: "{{installation_dir}}/config/server.properties"
     regexp: 'log.dirs=(.+)'
@@ -55,7 +55,7 @@
     backup: yes
 
 - name: Update the Java Heap Size for Kafka
-  become: yes
+  become: true
   replace:
     path: "{{installation_dir}}/bin/kafka-server-start.sh"
     regexp: 'export KAFKA_HEAP_OPTS=(".+")'
@@ -63,7 +63,7 @@
     backup: yes
 
 - name: Create a Service file for ZooKeeper with Copy module
-  become: yes
+  become: true
   copy:
     dest: /etc/systemd/system/zookeeper.service
     content: |
@@ -81,7 +81,7 @@
     mode: 0755
 
 - name: Create a Service file for Kafka with Copy module
-  become: yes
+  become: true
   copy:
     dest: /etc/systemd/system/kafka.service
     content: |
@@ -100,7 +100,7 @@
 
 - name: Start Services
   tags: startservices
-  become: yes
+  become: true
   systemd:
     name: '{{item}}'
     state: started
