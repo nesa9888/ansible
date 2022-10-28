@@ -96,7 +96,7 @@
           [Service]
           Type=simple
           User=kafka
-          ExecStart=/bin/sh -c '{{installation_dir}}/bin/kafka-server-start.sh {{installation_dir}}/config/server.properties > {{installation_dir}}/kafkase>
+          ExecStart=/bin/sh -c '{{installation_dir}}/bin/kafka-server-start.sh {{installation_dir}}/config/server.properties > {{installation_dir}}/kafkaservice.log 2>&1'
           ExecStop={{installation_dir}}/bin/kafka-server-stop.sh
           Restart=on-abnormal
           [Install]
