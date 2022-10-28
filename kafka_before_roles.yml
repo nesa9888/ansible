@@ -1,3 +1,4 @@
+---
 - name: Installing Kafka on Ubuntu
   hosts: all
   vars:
