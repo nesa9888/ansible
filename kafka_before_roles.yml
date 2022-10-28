@@ -2,7 +2,7 @@
 - name: Installing Kafka on Ubuntu
   hosts: all
   vars:
-    - installation_dir : /home/kafka
+    - installation_dir : /opt/kafka
     - username: kafka
   tasks:
     - name: Install JRE after apt update
@@ -84,7 +84,7 @@
           Restart=on-abnormal
           [Install]
           WantedBy=multi-user.target
-        mode: 0755
+        mode: 0777
 
     - name: Create a Service file for Kafka with Copy module
       become: yes
@@ -102,7 +102,7 @@
           Restart=on-abnormal
           [Install]
           WantedBy=multi-user.target
-        mode: 0755
+        mode: 0777
 
     - name: Start Services
       tags: startservices
